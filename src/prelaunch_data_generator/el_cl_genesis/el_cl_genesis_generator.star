@@ -78,6 +78,7 @@ def new_env_file_for_el_cl_genesis_data(
         else network_params.network_id,  # This will override the network_id if shadowfork_file is present. If you want to use the network_id, please ensure that you don't use "shadowfork" in the network name.
         "DepositContractAddress": network_params.deposit_contract_address,
         "SecondsPerSlot": network_params.seconds_per_slot,
+        "SlotsPerEpoch": network_params.slots_per_epoch,
         "PreregisteredValidatorKeysMnemonic": network_params.preregistered_validator_keys_mnemonic,
         "NumValidatorKeysToPreregister": total_num_validator_keys_to_preregister,
         "GenesisDelay": 0,  # This delay is already precaculated in the final_genesis_timestamp

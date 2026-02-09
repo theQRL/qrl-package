@@ -184,7 +184,6 @@ def get_config(
         "--ws.port={0}".format(WS_PORT_NUM),
         "--ws.api=admin,engine,net,qrl,web3,debug,txpool",
         "--ws.origins=*",
-        "--allow-insecure-unlock",
         "--nat=extip:" + port_publisher.nat_exit_ip,
         "--authrpc.port={0}".format(ENGINE_RPC_PORT_NUM),
         "--authrpc.addr=0.0.0.0",

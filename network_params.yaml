@@ -69,6 +69,7 @@ network_params:
   network_id: "3151908"
   deposit_contract_address: "Q4242424242424242424242424242424242424242"
   seconds_per_slot: 60
+  slots_per_epoch: 128
   num_validator_keys_per_node: 64
   preregistered_validator_keys_mnemonic:
     "veto waiter rail aroma aunt chess fiend than sahara unwary punk

@@ -140,6 +140,7 @@ SUBCATEGORY_PARAMS = {
         "network_id",
         "deposit_contract_address",
         "seconds_per_slot",
+        "slots_per_epoch",
         "num_validator_keys_per_node",
         "preregistered_validator_keys_mnemonic",
         "preregistered_validator_count",
