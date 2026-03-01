@@ -468,7 +468,7 @@ network_params:
   preregistered_validator_count: 0
 
   # How long you want the network to wait before starting up
-  genesis_delay: 20
+  genesis_delay: 40
 
   # The gas limit of the network set at genesis
   genesis_gaslimit: 30000000
@@ -486,21 +486,21 @@ network_params:
   churn_limit_quotient: 65536
 
   # Ejection balance
-  # Defaults to 16QRL
-  # 16000000000 shor
-  ejection_balance: 16000000000
+  # Defaults to 20000QRL
+  # 20000000000000 shor
+  ejection_balance: 20000000000000
 
   # Execution follow distance
-  # Defaults to 2048
-  execution_follow_distance: 2048
+  # Defaults to 512
+  execution_follow_distance: 512
 
   # The number of epochs to wait validators to be able to withdraw
-  # Defaults to 256 epochs ~27 hours
-  min_validator_withdrawability_delay: 256
+  # Defaults to 16 epochs
+  min_validator_withdrawability_delay: 16
 
   # The period of the shard committee
-  # Defaults to 256 epoch ~27 hours
-  shard_committee_period: 256
+  # Defaults to 16 epochs
+  shard_committee_period: 16
 
   # Network sync base url for syncing public networks from a custom snapshot (mostly useful for shadowforks)
   # Defaults to "https://snapshots.ethpandaops.io/"
