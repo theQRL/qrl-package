@@ -15,13 +15,13 @@ DISCOVERY_PORT_NUM = 30303
 ENGINE_RPC_PORT_NUM = 8551
 METRICS_PORT_NUM = 9001
 
-# TODO(old) Scale this dynamically based on CPUs available and Gzond nodes mining
+# TODO(old) Scale this dynamically based on CPUs available and Gqrl nodes mining
 NUM_MINING_THREADS = 1
 
 METRICS_PATH = "/debug/metrics/prometheus"
 
 # The dirpath of the execution data directory on the client container
-EXECUTION_DATA_DIRPATH_ON_CLIENT_CONTAINER = "/data/gzond/execution-data"
+EXECUTION_DATA_DIRPATH_ON_CLIENT_CONTAINER = "/data/gqrl/execution-data"
 
 ENTRYPOINT_ARGS = ["sh", "-c"]
 
@@ -77,7 +77,7 @@ def launch(
     )
 
     metrics_url = "{0}:{1}".format(service.ip_address, METRICS_PORT_NUM)
-    gzond_metrics_info = node_metrics.new_node_metrics_info(
+    gqrl_metrics_info = node_metrics.new_node_metrics_info(
         service_name, METRICS_PATH, metrics_url
     )
 
@@ -85,7 +85,7 @@ def launch(
     ws_url = "ws://{0}:{1}".format(service.ip_address, WS_PORT_NUM)
 
     return el_context.new_el_context(
-        client_name="gzond",
+        client_name="gqrl",
         qnode=qnode,
         ip_addr=service.ip_address,
         rpc_port_num=RPC_PORT_NUM,
@@ -95,7 +95,7 @@ def launch(
         ws_url=ws_url,
         qnr=qnr,
         service_name=service_name,
-        el_metrics_info=[gzond_metrics_info],
+        el_metrics_info=[gqrl_metrics_info],
     )
 
 
@@ -124,12 +124,12 @@ def get_config(
         init_datadir_cmd_str = "echo shadowfork"
 
     elif gcmode_archive:  # Disable path based storage scheme archive mode
-        init_datadir_cmd_str = "gzond init --state.scheme=hash --datadir={0} {1}".format(
+        init_datadir_cmd_str = "gqrl init --state.scheme=hash --datadir={0} {1}".format(
             EXECUTION_DATA_DIRPATH_ON_CLIENT_CONTAINER,
             constants.GENESIS_CONFIG_MOUNT_PATH_ON_CONTAINER + "/genesis.json",
         )
     else:
-        init_datadir_cmd_str = "gzond init --datadir={0} {1}".format(
+        init_datadir_cmd_str = "gqrl init --datadir={0} {1}".format(
             EXECUTION_DATA_DIRPATH_ON_CLIENT_CONTAINER,
             constants.GENESIS_CONFIG_MOUNT_PATH_ON_CONTAINER + "/genesis.json",
         )
@@ -163,7 +163,7 @@ def get_config(
     used_ports = shared_utils.get_port_specs(used_port_assignments)
 
     cmd = [
-        "gzond",
+        "gqrl",
         "{0}".format(
             "--{}".format(launcher.network)
             if launcher.network in constants.PUBLIC_NETWORKS
@@ -264,7 +264,7 @@ def get_config(
             size=int(participant.el_volume_size)
             if int(participant.el_volume_size) > 0
             else constants.VOLUME_SIZE[launcher.network][
-                constants.EL_TYPE.gzond + "_volume_size"
+                constants.EL_TYPE.gqrl + "_volume_size"
             ],
         )
     env_vars = participant.el_extra_env_vars
@@ -278,7 +278,7 @@ def get_config(
         "private_ip_address_placeholder": constants.PRIVATE_IP_ADDRESS_PLACEHOLDER,
         "env_vars": env_vars,
         "labels": shared_utils.label_maker(
-            client=constants.EL_TYPE.gzond,
+            client=constants.EL_TYPE.gqrl,
             client_type=constants.CLIENT_TYPES.el,
             image=participant.el_image[-constants.MAX_LABEL_LENGTH :],
             connected_client=cl_client_name,
@@ -300,7 +300,7 @@ def get_config(
     return ServiceConfig(**config_args)
 
 
-def new_gzond_launcher(
+def new_gqrl_launcher(
     el_cl_genesis_data,
     jwt_file,
     network,

@@ -1,5 +1,5 @@
 participants:
-  - el_type: gzond
+  - el_type: gqrl
     cl_type: qrysm
 mev_type: flashbots
 # additional_services:

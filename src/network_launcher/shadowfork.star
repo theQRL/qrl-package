@@ -32,7 +32,7 @@ def shadowfork_prep(
             curl -o /shadowfork/latest_block.json "
         + network_params.network_sync_base_url
         + base_network
-        + "/gzond/"
+        + "/gqrl/"
         + shadowfork_block
         + "/_snapshot_qrl_getBlockByNumber.json",
         store=[StoreSpec(src="/shadowfork", name="latest_blocks")],

@@ -7,7 +7,7 @@ genesis_constants = import_module(
 sanity_check = import_module("./sanity_check.star")
 
 DEFAULT_EL_IMAGES = {
-    "gzond": "qrledger/go-zond:stable",
+    "gqrl": "qrledger/go-qrl:stable",
 }
 
 DEFAULT_CL_IMAGES = {
@@ -27,7 +27,7 @@ DEFAULT_VC_IMAGES_MINIMAL = {
 }
 
 DEFAULT_REMOTE_SIGNER_IMAGES = {
-    "clef": "qrledger/go-zond:alltools-stable",
+    "clef": "qrledger/go-qrl:alltools-stable",
     "web3signer": "consensys/web3signer:latest",
 }
 
@@ -821,7 +821,7 @@ def default_minimal_network_params():
 
 def default_participant():
     return {
-        "el_type": "gzond",
+        "el_type": "gqrl",
         "el_image": "",
         "el_log_level": "",
         "el_extra_env_vars": {},

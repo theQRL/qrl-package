@@ -9,7 +9,7 @@ CLEF_KEY_PASSWORD = "passwordpassword"
 CLEF_KEY_PASSWORD_FILEPATH_ON_GENERATOR = "/tmp/clef-key-password.txt"
 CLEF_KEY_SEED_FILEPATH_ON_GENERATOR = "/tmp/clef-key-seed.txt"
 
-GZOND_TOOLS_IMAGE = "qrledger/go-zond:alltools-stable"
+GQRL_TOOLS_IMAGE = "qrledger/go-qrl:alltools-stable"
 
 SUCCESSFUL_EXEC_CMD_EXIT_CODE = 0
 
@@ -43,7 +43,7 @@ def get_config(files_artifact_mountpoints, docker_cache_params):
     return ServiceConfig(
         image=shared_utils.docker_cache_image_calc(
             docker_cache_params,
-            GZOND_TOOLS_IMAGE,
+            GQRL_TOOLS_IMAGE,
         ),
         entrypoint=ENTRYPOINT_ARGS,
         files=files_artifact_mountpoints,

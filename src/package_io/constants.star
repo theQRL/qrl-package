@@ -1,5 +1,5 @@
 EL_TYPE = struct(
-    gzond="gzond",
+    gqrl="gqrl",
 )
 
 CL_TYPE = struct(
@@ -134,19 +134,19 @@ GENESIS_TIME = {
 
 VOLUME_SIZE = {
     "mainnet": {
-        "gzond_volume_size": 1000000,  # 1TB
+        "gqrl_volume_size": 1000000,  # 1TB
         "qrysm_volume_size": 500000,  # 500GB
     },
     "devnets": {
-        "gzond_volume_size": 100000,  # 100GB
+        "gqrl_volume_size": 100000,  # 100GB
         "qrysm_volume_size": 100000,  # 100GB
     },
     "ephemery": {
-        "gzond_volume_size": 5000,  # 5GB
+        "gqrl_volume_size": 5000,  # 5GB
         "qrysm_volume_size": 1000,  # 1GB
     },
     "kurtosis": {
-        "gzond_volume_size": 5000,  # 5GB
+        "gqrl_volume_size": 5000,  # 5GB
         "qrysm_volume_size": 1000,  # 1GB
     },
 }
