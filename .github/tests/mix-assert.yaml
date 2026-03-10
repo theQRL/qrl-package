@@ -1,7 +1,7 @@
 participants:
-  - el_type: gzond
+  - el_type: gqrl
     cl_type: qrysm
-  - el_type: gzond
+  - el_type: gqrl
     cl_type: qrysm
 # additional_services:
 #   - assertoor

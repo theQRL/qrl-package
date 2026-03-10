@@ -1,8 +1,8 @@
 participants:
-  - el_type: gzond
+  - el_type: gqrl
     cl_type: qrysm
     count: 1
-  - el_type: gzond
+  - el_type: gqrl
     cl_type: qrysm
     count: 1
 additional_services:

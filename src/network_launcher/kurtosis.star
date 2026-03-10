@@ -33,6 +33,7 @@ def launch(
         validator_data = validator_keystores.generate_validator_keystores(
             plan,
             network_params.preregistered_validator_keys_mnemonic,
+            network_params.withdrawal_address,
             args_with_right_defaults.participants,
             args_with_right_defaults.docker_cache_params,
             network_params.light_kdf_enabled,

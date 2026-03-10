@@ -74,7 +74,7 @@ persistent: true
 It is possible to run the package on a Kubernetes cluster with taints and tolerations. This is done by adding the tolerations to the `tolerations` field in the `network_params.yaml` file. For example:
 ```yaml
 participants:
-  - el_type: gzond
+  - el_type: gqrl
     cl_type: qrysm
 global_tolerations:
   - key: "node-role.kubernetes.io/master6"
@@ -148,17 +148,17 @@ To configure the package behaviour, you can modify your `network_params.yaml` fi
 participants:
   # EL(Execution Layer) Specific flags
     # The type of EL client that should be started
-    # Valid values are gzond
-  - el_type: gzond
+    # Valid values are gqrl
+  - el_type: gqrl
 
     # The Docker image that should be used for the EL client; leave blank to use the default for the client type
     # Defaults by client:
-    # - gzond: qrledger/go-zond:stable
+    # - gqrl: qrledger/go-qrl:stable
     el_image: ""
 
     # The log level string that this participant's EL client should log at
     # If this is emptystring then the global `logLevel` parameter's value will be translated into a string appropriate for the client (e.g. if
-    # global `logLevel` = `info` then Gzond would receive `3`)
+    # global `logLevel` = `info` then Gqrl would receive `3`)
     # If this is not emptystring, then this value will override the global `logLevel` setting to allow for fine-grained control
     # over a specific participant's logging
     el_log_level: ""
@@ -327,8 +327,8 @@ participants:
     remote_signer_type: "clef"
 
     # The Docker image that should be used for the remote signer
-    # Defaults to "qrledger/go-zond:alltools-stable"
-    remote_signer_image: "qrledger/go-zond:alltools-stable"
+    # Defaults to "qrledger/go-qrl:alltools-stable"
+    remote_signer_image: "qrledger/go-qrl:alltools-stable"
 
     # A list of optional extra env_vars the remote signer container should spin up with
     remote_signer_extra_env_vars: {}
@@ -427,8 +427,8 @@ participants:
 # Each EL/CL/VC item can provide the same parameters as a standard participant
 participants_matrix: {}
   # el:
-  #   - el_type: gzond
-  #   - el_type: gzond
+  #   - el_type: gqrl
+  #   - el_type: gqrl
   # cl:
   #   - cl_type: qrysm
   #   - cl_type: qrysm
@@ -454,6 +454,9 @@ network_params:
   # Number of seconds per slot on the Beacon chain
   seconds_per_slot: 60
 
+  # Number of slots per epoch on the Beacon chain
+  slots_per_epoch: 128
+
   # The number of validator keys that each CL validator node should get
   num_validator_keys_per_node: 64
 
@@ -465,7 +468,7 @@ network_params:
   preregistered_validator_count: 0
 
   # How long you want the network to wait before starting up
-  genesis_delay: 20
+  genesis_delay: 40
 
   # The gas limit of the network set at genesis
   genesis_gaslimit: 30000000
@@ -483,21 +486,21 @@ network_params:
   churn_limit_quotient: 65536
 
   # Ejection balance
-  # Defaults to 16QRL
-  # 16000000000 shor
-  ejection_balance: 16000000000
+  # Defaults to 20000QRL
+  # 20000000000000 shor
+  ejection_balance: 20000000000000
 
   # Execution follow distance
-  # Defaults to 2048
-  execution_follow_distance: 2048
+  # Defaults to 512
+  execution_follow_distance: 512
 
   # The number of epochs to wait validators to be able to withdraw
-  # Defaults to 256 epochs ~27 hours
-  min_validator_withdrawability_delay: 256
+  # Defaults to 16 epochs
+  min_validator_withdrawability_delay: 16
 
   # The period of the shard committee
-  # Defaults to 256 epoch ~27 hours
-  shard_committee_period: 256
+  # Defaults to 16 epochs
+  shard_committee_period: 16
 
   # Network sync base url for syncing public networks from a custom snapshot (mostly useful for shadowforks)
   # Defaults to "https://snapshots.ethpandaops.io/"
@@ -554,6 +557,10 @@ network_params:
   # 10 * 2**20 (= 10485760, 10 MiB)
   # Defaults to 10485760 (10MB)
   gossip_max_size: 10485760
+
+  # Withdrawal address
+  # Default to "Q8943545177806ED17B9F23F0a21ee5948eCaa776"
+  withdrawal_address: "Q8943545177806ED17B9F23F0a21ee5948eCaa776"
 
 
 
@@ -916,7 +923,7 @@ port_publisher:
 
 ```yaml
 participants:
-  - el_type: gzond
+  - el_type: gqrl
     cl_type: qrysm
     count: 5
 ```
@@ -924,11 +931,11 @@ participants:
 </details>
 
 <details>
-    <summary>A 2-node gzond/qrysm network with optional services (Grafana, Prometheus, transaction-spammer, EngineAPI snooper, and a testnet verifier)</summary>
+    <summary>A 2-node gqrl/qrysm network with optional services (Grafana, Prometheus, transaction-spammer, EngineAPI snooper, and a testnet verifier)</summary>
 
 ```yaml
 participants:
-  - el_type: gzond
+  - el_type: gqrl
     cl_type: qrysm
     count: 2
 snooper_enabled: true
@@ -946,8 +953,8 @@ There are 4 custom labels that can be used to identify the nodes in the network.
 Execution Layer (EL) nodes:
 
 ```sh
-  "com.kurtosistech.custom.qrl-package-client": "gzond",
-  "com.kurtosistech.custom.qrl-package-client-image": "theqrl-gzond-latest",
+  "com.kurtosistech.custom.qrl-package-client": "gqrl",
+  "com.kurtosistech.custom.qrl-package-client-image": "theqrl-gqrl-latest",
   "com.kurtosistech.custom.qrl-package-client-type": "execution",
   "com.kurtosistech.custom.qrl-package-connected-client": "qrysm",
 ```
@@ -958,7 +965,7 @@ Consensus Layer (CL) nodes - Beacon:
   "com.kurtosistech.custom.qrl-package-client": "qrysm",
   "com.kurtosistech.custom.qrl-package-client-image": "theqrl-qrysm-beacon-chain-latest",
   "com.kurtosistech.custom.qrl-package-client-type": "beacon",
-  "com.kurtosistech.custom.qrl-package-connected-client": "gzond",
+  "com.kurtosistech.custom.qrl-package-connected-client": "gqrl",
 ```
 
 Consensus Layer (CL) nodes - Validator:
@@ -967,7 +974,7 @@ Consensus Layer (CL) nodes - Validator:
   "com.kurtosistech.custom.qrl-package-client": "qrysm",
   "com.kurtosistech.custom.qrl-package-client-image": "theqrl-qrysm-validator-latest",
   "com.kurtosistech.custom.qrl-package-client-type": "validator",
-  "com.kurtosistech.custom.qrl-package-connected-client": "gzond",
+  "com.kurtosistech.custom.qrl-package-connected-client": "gqrl",
 ```
 
 `qrl-package-client` describes which client is running on the node.
@@ -985,7 +992,7 @@ kurtosis run github.com/theQRL/qrl-package '{"mev_type": "full"}'
 
 Starting your network up with `"mev_type": "full"` will instantiate and connect the following infrastructure to your network:
 
-1. `Flashbot's block builder & CL validator + beacon` - A modified Gzond client that builds blocks. The CL validator and beacon clients are lighthouse clients configured to receive payloads from the relay.
+1. `Flashbot's block builder & CL validator + beacon` - A modified Gqrl client that builds blocks. The CL validator and beacon clients are lighthouse clients configured to receive payloads from the relay.
 2. `mev-relay-api` - Services that provide APIs for (a) proposers, (b) block builders, (c) data
 3. `mev-relay-website` - A website to monitor payloads that have been delivered
 4. `mev-relay-housekeeper` - Updates known validators, proposer duties, and more in the background. Only a single instance of this should run.

@@ -2,7 +2,7 @@ constants = import_module("../package_io/constants.star")
 input_parser = import_module("../package_io/input_parser.star")
 shared_utils = import_module("../shared_utils/shared_utils.star")
 
-gzond = import_module("./gzond/gzond_launcher.star")
+gqrl = import_module("./gqrl/gqrl_launcher.star")
 
 
 def launch(
@@ -23,8 +23,8 @@ def launch(
     remote_signer_context,
 ):
     el_launchers = {
-        constants.EL_TYPE.gzond: {
-            "launcher": gzond.new_gzond_launcher(
+        constants.EL_TYPE.gqrl: {
+            "launcher": gqrl.new_gqrl_launcher(
                 el_cl_data,
                 jwt_file,
                 network_params.network,
@@ -32,7 +32,7 @@ def launch(
                 remote_signer_context,
                 network_params.light_kdf_enabled,
             ),
-            "launch_method": gzond.launch,
+            "launch_method": gqrl.launch,
         },
     }
 

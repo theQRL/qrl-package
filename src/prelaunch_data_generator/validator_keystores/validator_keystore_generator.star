@@ -74,7 +74,7 @@ def get_config(files_artifact_mountpoints, docker_cache_params):
 # Generates keystores for the given number of nodes from the given mnemonic, where each keystore contains approximately
 #
 # 	num_keys / num_nodes keys
-def generate_validator_keystores(plan, mnemonic, participants, docker_cache_params, light_kdf_enabled):
+def generate_validator_keystores(plan, mnemonic, withdrawal_address, participants, docker_cache_params, light_kdf_enabled):
     service_name = launch_prelaunch_data_generator(
         plan, {}, "cl-validator-keystore", docker_cache_params
     )
@@ -114,13 +114,14 @@ def generate_validator_keystores(plan, mnemonic, participants, docker_cache_para
         generate_keystores_cmds = []
 
         start_index = running_total_validator_count
-        generate_validator_keys_cmd = '{0} new-seed --validator-start-index {1} --num-validators {2} --folder {3} --mnemonic "{4}" --keystore-password-file={5} --chain-name "dev"'.format(
+        generate_validator_keys_cmd = '{0} new-seed --validator-start-index {1} --num-validators {2} --folder {3} --mnemonic "{4}" --keystore-password-file={5} --chain-name "dev" --execution-address={6}'.format(
             "/usr/local/bin/deposit",
             start_index,
             participant.validator_count,
             shared_utils.path_join(output_dirpath, "validator_keys"),
             mnemonic,
             QRYSM_PASSWORD_FILEPATH_ON_GENERATOR,
+            withdrawal_address,
         )
         if light_kdf_enabled:
             generate_validator_keys_cmd += " --lightkdf"

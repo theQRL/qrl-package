@@ -100,6 +100,7 @@ def get_config(
         "--http",
         "--http.port={0}".format(CLEF_HTTP_PORT_NUM),
         "--suppress-bootwarn",
+        "--advanced",
     ]
 
     if len(participant.remote_signer_extra_params) > 0:

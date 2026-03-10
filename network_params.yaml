@@ -1,7 +1,7 @@
 participants:
 # EL
-  - el_type: gzond
-    el_image: qrledger/go-zond:stable
+  - el_type: gqrl
+    el_image: qrledger/go-qrl:stable
     el_log_level: ""
     el_extra_env_vars: {}
     el_extra_labels: {}
@@ -43,7 +43,7 @@ participants:
     use_remote_signer: false
 # Remote signer
     remote_signer_type: clef
-    remote_signer_image: qrledger/go-zond:alltools-stable
+    remote_signer_image: qrledger/go-qrl:alltools-stable
     remote_signer_extra_env_vars: {}
     remote_signer_extra_labels: {}
     remote_signer_extra_params: []
@@ -69,20 +69,21 @@ network_params:
   network_id: "3151908"
   deposit_contract_address: "Q4242424242424242424242424242424242424242"
   seconds_per_slot: 60
+  slots_per_epoch: 128
   num_validator_keys_per_node: 64
   preregistered_validator_keys_mnemonic:
     "veto waiter rail aroma aunt chess fiend than sahara unwary punk
     dawn belong agent sane reefy loyal from judas clean paste rho
     madam poor pay convoy duty circa hybrid circus exempt splash"
   preregistered_validator_count: 0
-  genesis_delay: 20
+  genesis_delay: 40
   genesis_gaslimit: 30000000
   max_per_epoch_activation_churn_limit: 8
   churn_limit_quotient: 65536
-  ejection_balance: 16000000000
-  execution_follow_distance: 2048
-  min_validator_withdrawability_delay: 256
-  shard_committee_period: 256
+  ejection_balance: 20000000000000
+  execution_follow_distance: 512
+  min_validator_withdrawability_delay: 16
+  shard_committee_period: 16
   network_sync_base_url: https://snapshots.theqrl.org/
   data_column_sidecar_subnet_count: 128
   samples_per_slot: 8
@@ -90,6 +91,7 @@ network_params:
   additional_preloaded_contracts: {}
   devnet_repo: theqrl
   prefunded_accounts: {}
+  withdrawal_address: "Q8943545177806ED17B9F23F0a21ee5948eCaa776"
 additional_services: []
 dora_params:
   image: ""

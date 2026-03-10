@@ -3558,8 +3558,8 @@
       {
         "current": {
           "selected": false,
-          "text": "1-qrysm-gzond",
-          "value": "1-qrysm-gzond"
+          "text": "1-qrysm-gqrl",
+          "value": "1-qrysm-gqrl"
         },
         "datasource": {
           "type": "prometheus",

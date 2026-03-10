@@ -83,39 +83,6 @@ tasks:
   config:
     minUnfinalizedEpochs: 5
 
-# check if all client pairs propose blocks with dilithium changes during un-finality
-- name: run_task_background
-  title: "Check if all clients propose blocks with Dilithium changes during un-finality"
-  config:
-    onBackgroundComplete: failOrIgnore
-    backgroundTask:
-      name: generate_dilithium_changes
-      title: "Generate 50 Dilithium changes (1 dilithium change per slot)"
-      config:
-        limitTotal: 50
-        limitPerSlot: 1
-        indexCount: 100
-        targetAddress: Q65D08a056c17Ae13370565B04cF77D2AfA1cB9FA
-      configVars:
-        mnemonic: "validatorMnemonic"
-
-    foregroundTask:
-      name: run_task_matrix
-      title: "Check dilithium change inclusion with all client pairs"
-      timeout: 1h
-      configVars:
-        matrixValues: "validatorPairNames"
-      config:
-        runConcurrent: true
-        matrixVar: "validatorPairName"
-        task:
-          name: check_consensus_block_proposals
-          title: "Wait for block proposal with deposits from ${validatorPairName}"
-          configVars:
-            validatorNamePattern: "validatorPairName"
-          config:
-            minDilithiumChangeCount: 1
-
 # check if all client pairs propose blocks with exits during un-finality
 - name: run_task_background
   title: "Check if all clients propose blocks with exits during un-finality"
@@ -233,40 +200,6 @@ tasks:
   config:
     maxUnfinalizedEpochs: 4
 
-# check if all client pairs propose blocks with dilithium changes during finality
-- name: run_task_background
-  title: "Check if all clients propose blocks with Dilithium changes during finality"
-  config:
-    onBackgroundComplete: failOrIgnore
-    backgroundTask:
-      name: generate_dilithium_changes
-      title: "Generate 1 dilithium change per slot"
-      config:
-        startIndex: 150
-        limitTotal: 50
-        limitPerSlot: 1
-        indexCount: 50
-        targetAddress: Q65D08a056c17Ae13370565B04cF77D2AfA1cB9FA
-      configVars:
-        mnemonic: "validatorMnemonic"
-
-    foregroundTask:
-      name: run_task_matrix
-      title: "Check dilithium change inclusion with all client pairs"
-      timeout: 1h
-      configVars:
-        matrixValues: "validatorPairNames"
-      config:
-        runConcurrent: true
-        matrixVar: "validatorPairName"
-        task:
-          name: check_consensus_block_proposals
-          title: "Wait for block proposal with Dilithium changes from ${validatorPairName}"
-          configVars:
-            validatorNamePattern: "validatorPairName"
-          config:
-            minDilithiumChangeCount: 1
-
 # check if all client pairs propose blocks with exits during finality
 - name: run_task_background
   title: "Check if all clients propose blocks with exits during finality"
@@ -378,17 +311,5 @@ cleanupTasks:
       config:
         limitTotal: 300
         indexCount: 300
-      configVars:
-        mnemonic: "validatorMnemonic"
-- name: run_task_options
-  title: "Withdraw all funds"
-  config:
-    task:
-      name: generate_dilithium_changes
-      title: "Generate Dilithium changes for all validators"
-      config:
-        limitTotal: 300
-        indexCount: 300
-        targetAddress: Q65D08a056c17Ae13370565B04cF77D2AfA1cB9FA
       configVars:
         mnemonic: "validatorMnemonic"

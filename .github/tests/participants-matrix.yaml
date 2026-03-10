@@ -1,6 +1,6 @@
 participants_matrix:
   el:
-    - el_type: gzond
+    - el_type: gqrl
   cl:
     - cl_type: qrysm
   vc:

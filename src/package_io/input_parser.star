@@ -7,7 +7,7 @@ genesis_constants = import_module(
 sanity_check = import_module("./sanity_check.star")
 
 DEFAULT_EL_IMAGES = {
-    "gzond": "qrledger/go-zond:stable",
+    "gqrl": "qrledger/go-qrl:stable",
 }
 
 DEFAULT_CL_IMAGES = {
@@ -27,7 +27,7 @@ DEFAULT_VC_IMAGES_MINIMAL = {
 }
 
 DEFAULT_REMOTE_SIGNER_IMAGES = {
-    "clef": "qrledger/go-zond:alltools-stable",
+    "clef": "qrledger/go-qrl:alltools-stable",
     "web3signer": "consensys/web3signer:latest",
 }
 
@@ -270,6 +270,7 @@ def input_parser(plan, input_args):
                 "deposit_contract_address"
             ],
             seconds_per_slot=result["network_params"]["seconds_per_slot"],
+            slots_per_epoch=result["network_params"]["slots_per_epoch"],
             genesis_delay=result["network_params"]["genesis_delay"],
             genesis_gaslimit=result["network_params"]["genesis_gaslimit"],
             light_kdf_enabled=result["network_params"]["light_kdf_enabled"],
@@ -297,6 +298,7 @@ def input_parser(plan, input_args):
             devnet_repo=result["network_params"]["devnet_repo"],
             prefunded_accounts=result["network_params"]["prefunded_accounts"],
             gossip_max_size=result["network_params"]["gossip_max_size"],
+            withdrawal_address=result["network_params"]["withdrawal_address"],
         ),
         mev_params=struct(
             mev_relay_image=result["mev_params"]["mev_relay_image"],
@@ -626,6 +628,9 @@ def parse_network_params(plan, input_args):
     if result["network_params"]["seconds_per_slot"] == 0:
         fail("seconds_per_slot is 0 needs to be > 0 ")
 
+    if result["network_params"]["slots_per_epoch"] == 0:
+        fail("slots_per_epoch is 0 needs to be > 0 ")
+
     if (
         result["network_params"]["network"] == constants.NETWORK_NAME.kurtosis
         or constants.NETWORK_NAME.shadowfork in result["network_params"]["network"]
@@ -756,18 +761,19 @@ def default_network_params():
         "network_id": "3151908",
         "deposit_contract_address": "Q4242424242424242424242424242424242424242",
         "seconds_per_slot": 60,
+        "slots_per_epoch": 128,
         "num_validator_keys_per_node": 64,
         "preregistered_validator_keys_mnemonic": constants.DEFAULT_MNEMONIC,
         "preregistered_validator_count": 0,
-        "genesis_delay": 20,
+        "genesis_delay": 40,
         "genesis_gaslimit": 30000000,
         "light_kdf_enabled": False,
         "max_per_epoch_activation_churn_limit": 8,
         "churn_limit_quotient": 65536,
-        "ejection_balance": 16000000000,
-        "execution_follow_distance": 2048,
-        "min_validator_withdrawability_delay": 256,
-        "shard_committee_period": 256,
+        "ejection_balance": 20000000000000,
+        "execution_follow_distance": 512,
+        "min_validator_withdrawability_delay": 16,
+        "shard_committee_period": 16,
         "network_sync_base_url": "https://snapshots.theqrl.org/",
         "data_column_sidecar_subnet_count": 128,
         "samples_per_slot": 8,
@@ -777,6 +783,7 @@ def default_network_params():
         "devnet_repo": "ethpandaops",
         "prefunded_accounts": {},
         "gossip_max_size": 10485760,
+        "withdrawal_address": "Q8943545177806ED17B9F23F0a21ee5948eCaa776",
     }
 
 
@@ -786,10 +793,11 @@ def default_minimal_network_params():
         "network_id": "3151908",
         "deposit_contract_address": "Q4242424242424242424242424242424242424242",
         "seconds_per_slot": 15,
+        "slots_per_epoch": 60,
         "num_validator_keys_per_node": 64,
         "preregistered_validator_keys_mnemonic": constants.DEFAULT_MNEMONIC,
         "preregistered_validator_count": 0,
-        "genesis_delay": 20,
+        "genesis_delay": 40,
         "genesis_gaslimit": 30000000,
         "light_kdf_enabled": False,
         "max_per_epoch_activation_churn_limit": 4,
@@ -807,12 +815,13 @@ def default_minimal_network_params():
         "devnet_repo": "ethpandaops",
         "prefunded_accounts": {},
         "gossip_max_size": 10485760,
+        "withdrawal_address": "Q8943545177806ED17B9F23F0a21ee5948eCaa776",
     }
 
 
 def default_participant():
     return {
-        "el_type": "gzond",
+        "el_type": "gqrl",
         "el_image": "",
         "el_log_level": "",
         "el_extra_env_vars": {},
